@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 # Created by https://www.toptal.com/developers/gitignore/api/flutter,dart,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=flutter,dart,visualstudiocode
 
 ### Dart ###
+=======
+>>>>>>> d53ae9e24d49bc31f2343b1195e28331cff36fe2
 # See https://www.dartlang.org/guides/libraries/private-files
 
 # Files and directories created by pub
@@ -29,6 +32,7 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+<<<<<<< HEAD
 
 ### Dart Patch ###
 # dotenv environment variables file
@@ -113,3 +117,5 @@ lib/generated_plugin_registrant.dart
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/flutter,dart,visualstudiocode
+=======
+>>>>>>> d53ae9e24d49bc31f2343b1195e28331cff36fe2
