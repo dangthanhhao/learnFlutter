@@ -45,4 +45,8 @@ class Meal {
       input[0].toUpperCase() + input.substring(1);
   String get complexityText => _firstCharUper(complexity.name);
   String get affordabilityText => _firstCharUper(affordability.name);
+  @override
+  String toString() {
+    return title;
+  }
 }

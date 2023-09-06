@@ -5,11 +5,9 @@ import 'package:transparent_image/transparent_image.dart';
 import 'package:meals/models/meal.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem(
-      {super.key, required this.meal, required this.onToogleFavorite});
+  const MealItem({super.key, required this.meal});
 
   final Meal meal;
-  final Function(Meal meal) onToogleFavorite;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -22,8 +20,7 @@ class MealItem extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MealDetailsScreen(
-                  meal: meal, onToogleFavorite: onToogleFavorite),
+              builder: (context) => MealDetailsScreen(meal: meal),
             ),
           );
         },
