@@ -18,27 +18,41 @@ class MealDetailsScreen extends ConsumerWidget {
         title: Text(meal.title),
         actions: [
           IconButton(
-              onPressed: () {
-                // onToogleFavorite(meal);
-                final wasAdded = ref
-                    .read(favoriteMealsProvider.notifier)
-                    .toggleMealFavoritesMeal(meal);
-                scaffoldMessenger.clearSnackBars();
-                scaffoldMessenger.showSnackBar(
-                    SnackBar(content: Text(wasAdded ? 'Added' : 'Removed')));
+            onPressed: () {
+              // onToogleFavorite(meal);
+              final wasAdded = ref
+                  .read(favoriteMealsProvider.notifier)
+                  .toggleMealFavoritesMeal(meal);
+              scaffoldMessenger.clearSnackBars();
+              scaffoldMessenger.showSnackBar(
+                  SnackBar(content: Text(wasAdded ? 'Added' : 'Removed')));
+            },
+            icon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              child: Icon(
+                isFav ? Icons.star : Icons.star_border,
+                key: ValueKey(isFav),
+              ),
+              transitionBuilder: (child, animation) {
+                return RotationTransition(
+                  turns: Tween(begin: 0.8, end: 1.0).animate(animation),
+                  child: child,
+                );
               },
-              icon: isFav
-                  ? const Icon(Icons.star)
-                  : const Icon(Icons.star_border))
+            ),
+          )
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.network(
-              meal.imageUrl,
-              fit: BoxFit.cover,
-              height: 300,
+            Hero(
+              tag: meal.id,
+              child: Image.network(
+                meal.imageUrl,
+                fit: BoxFit.cover,
+                height: 300,
+              ),
             ),
             const SizedBox(
               height: 14,

@@ -5,8 +5,25 @@ import 'package:meals/models/meal.dart';
 import 'package:meals/screens/meals.dart';
 import 'package:meals/widgets/category_grid_item.dart';
 
-class CategoriesScreen extends StatelessWidget {
+class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
+
+  @override
+  State<CategoriesScreen> createState() => _CategoriesScreenState();
+}
+
+class _CategoriesScreenState extends State<CategoriesScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+
+    _animationController.forward();
+  }
 
   void _selectCategory(BuildContext context, Category category) {
     final meals = dummyMeals
@@ -26,7 +43,7 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView(
+    final content = GridView(
       padding: const EdgeInsets.all(24),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -41,6 +58,13 @@ class CategoriesScreen extends StatelessWidget {
             onSelectCategory: () => _selectCategory(context, category),
           )
       ],
+    );
+
+    return SlideTransition(
+      position: Tween<Offset>(begin: Offset(0, 0.3), end: Offset.zero).animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+      ),
+      child: content,
     );
   }
 }
