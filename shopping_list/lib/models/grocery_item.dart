@@ -7,8 +7,12 @@ class GroceryItem {
     required this.quantity,
     required this.category,
   });
-  final String id;
-  final String name;
-  final int quantity;
-  final Category category;
+  String id;
+  String name;
+  int quantity;
+  Category category;
+  @override
+  String toString() {
+    return '$id $name $quantity ${category.title}';
+  }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list/data/categories.dart';
 
+import '../models/category.dart';
+import '../models/grocery_item.dart';
+
 class NewItem extends StatefulWidget {
   const NewItem({super.key});
 
@@ -10,6 +13,11 @@ class NewItem extends StatefulWidget {
 
 class _NewItemState extends State<NewItem> {
   final _formKey = GlobalKey<FormState>();
+  final newItem = GroceryItem(
+      id: DateTime.now().toString(),
+      name: '',
+      quantity: 1,
+      category: categories[Categories.vegetables]!);
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +41,7 @@ class _NewItemState extends State<NewItem> {
                     }
                     return null;
                   },
+                  onSaved: (newValue) => newItem.name = newValue!,
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -51,6 +60,8 @@ class _NewItemState extends State<NewItem> {
                           }
                           return null;
                         },
+                        onSaved: (newValue) =>
+                            newItem.quantity = int.parse(newValue!),
                       ),
                     ),
                     const SizedBox(
@@ -78,6 +89,8 @@ class _NewItemState extends State<NewItem> {
                             )
                         ],
                         onChanged: (value) {},
+                        onSaved: (newValue) => newItem.category = newValue!,
+                        value: newItem.category,
                       ),
                     )
                   ],
@@ -88,6 +101,8 @@ class _NewItemState extends State<NewItem> {
                     ElevatedButton(
                         onPressed: () {
                           _formKey.currentState!.validate();
+                          _formKey.currentState!.save();
+                          Navigator.of(context).pop(newItem);
                         },
                         child: const Text('OK')),
                     TextButton(

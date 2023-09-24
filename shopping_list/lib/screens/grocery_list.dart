@@ -12,32 +12,50 @@ class GroceryListScreen extends StatefulWidget {
 }
 
 class _GroceryListScreenState extends State<GroceryListScreen> {
-  final List<GroceryItem> groceryList = groceryItems.toList();
+  final List<GroceryItem> groceryList = [];
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Your Groceries'),
-        actions: [
-          IconButton(onPressed: _onNewItem, icon: const Icon(Icons.add))
-        ],
-      ),
-      body: ListView.builder(
-        itemCount: groceryList.length,
-        itemBuilder: (context, index) => GroceryListItem(
-          groceryItem: groceryList[index],
-        ),
-      ),
+    Widget currentWidget = const Center(
+      child: Text('Empty'),
     );
+    if (groceryList.isNotEmpty) {
+      currentWidget = ListView.builder(
+        itemCount: groceryList.length,
+        itemBuilder: (context, index) => Dismissible(
+          key: ValueKey(groceryList[index].id),
+          onDismissed: (direction) {
+            setState(() {
+              groceryList.removeAt(index);
+            });
+          },
+          child: GroceryListItem(
+            groceryItem: groceryList[index],
+          ),
+        ),
+      );
+    }
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Your Groceries'),
+          actions: [
+            IconButton(onPressed: _onNewItem, icon: const Icon(Icons.add))
+          ],
+        ),
+        body: currentWidget);
   }
 
-  void _onNewItem() {
-    Navigator.of(context).push(
+  void _onNewItem() async {
+    final newItem = await Navigator.of(context).push<GroceryItem>(
       MaterialPageRoute(
         builder: (context) => const NewItem(),
       ),
     );
+    if (newItem != null) {
+      setState(() {
+        groceryList.add(newItem);
+      });
+    }
   }
 }
